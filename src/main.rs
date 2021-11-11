@@ -42,7 +42,9 @@ async fn main() {
                 .unwrap();
 
             let mut my_service_maker: MyMaker<_, SocketAddr> = MyMaker::new(handler.clone());
-            let mut axum_server_maker = app1.into_make_service_with_connect_info::<SocketAddr, _>();
+            let mut axum_server_maker = app1
+                .clone()
+                .into_make_service_with_connect_info::<SocketAddr, _>();
             let axum_made_service = axum_server_maker.make_service(&stream).await.unwrap();
             let my_made_service = my_service_maker.make_service(&stream).await.unwrap();
 
